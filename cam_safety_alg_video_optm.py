@@ -172,11 +172,14 @@ class SafetyEstimator:
         while cap.isOpened():
             start_time = time.time() * 1000
             ret, frame = cap.read()
+            # height, width = frame.shape[:2]
+            # if isPrint: print(f"Resolution is: width: {width} x height: {height}")
+
+            if not ret or frame is None: # if not ret:
+                break
+
             height, width = frame.shape[:2]
             if isPrint: print(f"Resolution is: width: {width} x height: {height}")
-
-            if not ret:
-                break
 
             # Get pixels from yolo and estimator_include map from midas
             x_pix, y_pix, human_boxes = self.yolo.detect_human(frame)
