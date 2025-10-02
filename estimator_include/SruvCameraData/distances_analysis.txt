@@ -1,0 +1,18 @@
+0.503211212589794
+
+Horizontal distance is: 0.6724138331684554
+
+
+
+
+x and y scaled
+	closes point = Horizontal distance is: 0.6695425824839418
+	delta z = [ 0.48138496 -0.10444013 -0.46051359]
+
+fx and fy divided by 2
+	closes point = Horizontal distance is: 0.6967614815570381
+	delta z = [ 0.47020756 -0.10236243 -0.4587903 ]
+
+non scaling
+	Delta distance is: [ 0.22989748 -0.05384117 -0.45544589]
+	closes point = Horizontal distance is: 0.5130133314819211
