@@ -281,6 +281,56 @@ class SafetyEstimator:
         np.save(distances_name, self.distances_array)
         np.save(differences_name, self.diff_array)
 
+    def save_video(self, filename='SavedFilesNP/output_1.avi', fps=None):
+
+        cap = cv2.VideoCapture('SavedFilesNP/Video.avi')
+
+        if not cap.isOpened():
+            raise RuntimeError("Cannot open input video!")
+
+        # Get actual video properties
+        width = int(cap.get(cv2.CAP_PROP_FRAME_WIDTH))
+        height = int(cap.get(cv2.CAP_PROP_FRAME_HEIGHT))
+        input_fps = cap.get(cv2.CAP_PROP_FPS)
+
+        if fps is None:
+            fps = input_fps if input_fps > 0 else 20.0
+
+        # Create output directory
+        os.makedirs(os.path.dirname(filename), exist_ok=True)
+
+        # Initialize video writer
+        fourcc = cv2.VideoWriter_fourcc(*'MJPG')
+        out = cv2.VideoWriter(filename, fourcc, fps, (width, height))
+
+        if not out.isOpened():
+            cap.release()
+            raise RuntimeError("Cannot initialize video writer!")
+
+        frame_count = 0
+
+        try:
+            while True:
+                ret, frame = cap.read()
+
+                if not ret:
+                    break
+
+                # YOLO detection
+                x_pix, y_pix, human_boxes = self.yolo.detect_human(frame)
+                self.yolo.draw_boxes(frame, human_boxes)
+
+                # Save processed frame
+                out.write(frame)
+                frame_count += 1
+
+        finally:
+            cap.release()
+            out.release()
+
+        print(f"Saved {frame_count} frames to {filename}")
+        print(f"Resolution: {width}x{height}, FPS: {fps}")
+
 
 def main():
     # Yolo initialized in constructor
@@ -291,6 +341,7 @@ def main():
     estimator.video_stream()
     estimator.plot_data()
     # estimator.save_data()
+    estimator.save_video()
 
 
 if __name__ == '__main__':
