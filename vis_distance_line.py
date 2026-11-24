@@ -131,8 +131,11 @@ if __name__ == "__main__":
 
     estimator = SafetyEstimator()
 
-    model_path = 'estimator_include/midas_v31_models/weights/dpt_levit_224.pt'
-    model_type = 'dpt_levit_224'
+    # model_path = 'estimator_include/midas_v31_models/weights/dpt_levit_224.pt'
+    # model_type = 'dpt_levit_224'
+
+    model_path = 'estimator_include/midas_v31_models/weights/dpt_swin2_large_384.pt'
+    model_type = 'dpt_swin2_large_384'
 
     estimator.init_midas_v31(
         model_path=model_path,
